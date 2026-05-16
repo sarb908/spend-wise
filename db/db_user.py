@@ -1,7 +1,3 @@
-
-
-
-
 from auth_utils import get_password_hash
 from sqlalchemy.orm import Session
 

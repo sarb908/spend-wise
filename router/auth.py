@@ -1,9 +1,5 @@
-import json
-
-import db
 from models.user import DbUser
 from sqlalchemy.orm import Session
-
 from database import get_db
 from fastapi import APIRouter, Depends
 from schema.user import UserBase, UserDisplay
@@ -29,16 +25,16 @@ def signup(request:UserBase ,db:Session = Depends(get_db) ):
 
 
 @router.post("/login" )
-def login(request:UserBase , db:Session = Depends(get_db)):
-        
+def login(request:UserBase , db:Session = Depends(get_db)):        
         username = request.username
         user = db.query(DbUser).filter(DbUser.username == username).first()
-
-        # status = verify_password(request.password, user.password)
-
+        status = verify_password(request.password, user.password)
+        
+        if not status or user is None:
+            return {"error": "Invalid credentials"}
 
         return {
-                "access_token": user.password,
+                "access_token": status,
                 # "token_type": status
             }
     
