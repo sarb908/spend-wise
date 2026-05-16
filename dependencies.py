@@ -31,4 +31,5 @@ def get_current_user(token:str = Depends(oauth2_scheme),db:Session = Depends(get
     user = db.query(DbUser).filter(DbUser.username == username).first()
     if user is None:
         raise credentials_exception
+    
     return user
