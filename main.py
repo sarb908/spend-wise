@@ -2,11 +2,13 @@ from fastapi import FastAPI
 from database import Base, engine
 from router.auth import router
 from router.income import income_router
+from router.expense import expense_router
 app = FastAPI()
 
 
 app.include_router(router)
 app.include_router(income_router)
+app.include_router(expense_router)
 
 @app.get("/")
 def home():

@@ -1,21 +1,21 @@
-from pydantic import BaseModel, Date
+from pydantic import BaseModel
 from typing import Optional
-
+from datetime import date
 class ExpenseBase(BaseModel):
     amount: float
-    date: Date  # ISO format date string
+    date: date  # ISO format date string
     source: str
     is_recurring: bool
 
 class ExpenseUpdate(BaseModel):
-    amount: Optional[float] 
-    date: Optional[Date]  # ISO format date string
-    source: Optional[str]
-    is_recurring: Optional[bool] = False  
+    amount: Optional[float] =None
+    date: Optional[date] = None  # ISO format date string
+    source: Optional[str] = None
+    is_recurring: Optional[bool] = None                                 
 
 class ExpenseDisplay(BaseModel):
     amount: Optional[float] 
-    date: Optional[Date]  # ISO format date string
+    date: Optional[date]  # ISO format date string
     source: Optional[str]
     is_recurring: Optional[bool] = False  
     id:int

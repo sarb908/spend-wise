@@ -13,3 +13,4 @@ class DbUser(Base):
     email = Column(String)
     password = Column(String)
     incomes = relationship("DbIncome", back_populates="user")
+    expenses = relationship("DbExpense", back_populates="user")
