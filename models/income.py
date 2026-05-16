@@ -14,4 +14,5 @@ class DbIncome(Base):
     is_recurring = Column(Boolean, nullable = False)
     user_id = Column(Integer, ForeignKey("users.id") , nullable=False, index=True)
 
-    user = relationship("User", back_populates="income")
+    user = relationship("DbUser", back_populates="incomes")
+

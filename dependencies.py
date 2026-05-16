@@ -20,8 +20,8 @@ def get_current_user(token:str = Depends(oauth2_scheme),db:Session = Depends(get
 
     try:
         payload = jwt.decode(token,SECRET_KEY,algorithms=ALGORITHIM)
-        username : str =  payload.get("sub")
-
+        username : str =  payload.get("data").get("sub")
+        print("username", username, token)
         if not username:
             raise credentials_exception
 
@@ -29,7 +29,6 @@ def get_current_user(token:str = Depends(oauth2_scheme),db:Session = Depends(get
         raise credentials_exception
     
     user = db.query(DbUser).filter(DbUser.username == username).first()
-
     if user is None:
         raise credentials_exception
     return user
