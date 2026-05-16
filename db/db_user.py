@@ -1,6 +1,6 @@
 from auth_utils import get_password_hash
 from sqlalchemy.orm import Session
-
+from schema.user import UserBase
 from models.user import DbUser
 from schema.user import UserBase
 
