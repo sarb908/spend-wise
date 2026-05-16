@@ -25,7 +25,7 @@ def create_income(request: IncomeBase, db: Session, current_user:DbUser):
 
 
 
-def get_income(source:Optional[str]=None, db: Session = Depends(get_db), current_user:DbUser = Depends(get_current_user)):
+def get_income( db: Session, current_user:DbUser, source:Optional[str]=None):
     if source:
         income = db.query(DbIncome).filter(DbIncome.source == source, DbIncome.user_id == current_user.id).all()
     else:
@@ -33,3 +33,15 @@ def get_income(source:Optional[str]=None, db: Session = Depends(get_db), current
     return income
 
 
+def update_income(income_id: int, request: IncomeBase, db: Session, current_user:DbUser):
+    income = db.query(DbIncome).filter(DbIncome.id == income_id, DbIncome.user_id == current_user.id).first()
+    if not income:
+        return {"error": "Income not found"}
+    income.amount = request.amount
+    income.date = request.date
+    income.source = request.source
+    income.is_recurring = request.is_recurring
+
+    db.commit()
+    db.refresh(income)
+    return income

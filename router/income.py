@@ -7,7 +7,7 @@ from schema.income import IncomeBase, IncomeDisplay, IncomeUpdate
 from dependencies import get_current_user
 from database import get_db
 from auth_token import oauth2_scheme
-from db.db_income import create_income, get_income
+from db.db_income import create_income, get_income,update_income
 
 
 income_router = APIRouter(prefix="/income", tags=["incomes"])
@@ -38,20 +38,7 @@ def get_total_income(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
 @income_router.patch("/{income_id}")
 def update_income(income_id: int, request: IncomeUpdate, token: str = Depends(oauth2_scheme), db: Session = Depends(get_db), current_user = Depends(get_current_user)):
-    income = db.query(DbIncome).filter(DbIncome.id == income_id, DbIncome.user_id == current_user.id).first()
-    if not income:
-        return {"error": "Income not found"}
-    if request.amount is not None:
-        income.amount = request.amount
-    if request.date is not None:
-        income.date = request.date
-    if request.source is not None:
-        income.source = request.source
-    if request.is_recurring is not None:
-        income.is_recurring = request.is_recurring
-
-    db.commit()
-    db.refresh(income)
+    income = update_income(income_id, request, db, current_user)
     return income
 
 
