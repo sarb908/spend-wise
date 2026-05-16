@@ -5,7 +5,11 @@
 
 from passlib.context import CryptContext
 
-pwd_cxt = CryptContext(schemes=['bcrypt'],deprecated = "auto")
+
+pwd_cxt = CryptContext(
+    schemes=["argon2"],
+    deprecated="auto"
+)
 
 
 def get_password_hash(password: str) -> str:

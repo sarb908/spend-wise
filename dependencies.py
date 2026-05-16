@@ -3,7 +3,9 @@ from fastapi import Depends,HTTPException,status
 from sqlalchemy.orm import Session
 from database import get_db
 from models.user import DbUser
-from auth_utils import SECRET_KEY,ALGORITHIM,oauth2_scheme
+from auth_token import oauth2_scheme
+SECRET_KEY = 'LKAJFDLKJSLKFJLS'
+ALGORITHIM = 'HS256'
 
 
 

@@ -1,4 +1,4 @@
-from db.database import Base
+from database import Base
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.sql.sqltypes import Integer, String, Float, Date, Boolean
 from sqlalchemy.orm import relationship
@@ -14,4 +14,4 @@ class DbIncome(Base):
     is_recurring = Column(Boolean, nullable = False)
     user_id = Column(Integer, ForeignKey("users.id") , nullable=False, index=True)
 
-    user = relationship("User", back_populates="expenses")
+    user = relationship("User", back_populates="income")
